@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 export const metadata = {
-  title: "Add Product - ecommerce",
+  title: "Add Product - Owy Shoppy",
 };
 
 const addProduct = async (formData: FormData) => {

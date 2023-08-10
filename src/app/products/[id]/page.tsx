@@ -24,7 +24,7 @@ export async function generateMetadata({
 }: params): Promise<Metadata> {
   const product = await getProduct(id);
   return {
-    title: product.name + " - ecommerce",
+    title: product.name + " - Owy Shoppy",
     description: product.description,
     openGraph: {
       images: [{ url: product.imageUrl }],
