@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "./NavBar/NavBar";
+import SessionProvider from "./SessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,10 +19,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={` relative ${inter.className}`}>
-        <div className="sticky top-0 z-50">
-          <NavBar />
-        </div>
-        <main className="p-4 max-w-7×1 m-auto min-w-[300px] ">{children}</main>
+        <SessionProvider>
+          <div className="sticky top-0 z-50">
+            <NavBar />
+          </div>
+          <main className="p-4 max-w-7×1 m-auto min-w-[300px] ">
+            {children}
+          </main>
+        </SessionProvider>
       </body>
     </html>
   );

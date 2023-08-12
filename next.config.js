@@ -7,6 +7,7 @@ const nextConfig = {
       { hostname: "lh3.googleusercontent.com" },
       { hostname: "cdn.shopify.com" },
       { hostname: "epomaker.com" },
+      { hostname: "1h3.googleusercontent.com" },
     ],
   },
   experimental: {
