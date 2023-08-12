@@ -18,9 +18,9 @@ const NavBar = async () => {
   const cart = await getCart();
 
   return (
-    <div className="bg-base-100 my-2">
+    <div className="bg-base-100 py-2">
       <div className=" navbar max-w-7xl m-auto flex justify-between">
-        <div className="felx md:gap-10 md:justify-between">
+        <div className="flex md:gap-10 md:justify-between">
           <Link href={"/"} className=" btn btn-ghost text-xl normal-case">
             <Image
               src={"/logo.png"}

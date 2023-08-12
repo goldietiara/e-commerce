@@ -10,7 +10,7 @@ export const metadata = {
 const addProduct = async (formData: FormData) => {
   "use server";
 
-  //need to fix this
+  //PR
   const name = formData.get("name")?.toString() || "";
   const description = formData.get("description")?.toString() || "";
   const imageUrl = formData.get("imageUrl")?.toString() || "";

@@ -10,7 +10,7 @@ export default async function Home() {
   return (
     <main>
       <div className=" hero rounded-2xl bg-base-200">
-        <div className=" hero-content flex-col lg:flex-row">
+        <div className=" hero-content flex-col md:flex-row">
           <Image
             src={products[0].imageUrl}
             alt={products[0].name}

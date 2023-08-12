@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Owy Shoppy",
-  description: "fullstack ecommerce by Goldie",
+  description: "fullstack e-commerce by Goldie",
 };
 
 export default function RootLayout({
@@ -17,8 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={` ${inter.className}`}>
-        <NavBar />
+      <body className={` relative ${inter.className}`}>
+        <div className="sticky top-0 z-50">
+          <NavBar />
+        </div>
         <main className="p-4 max-w-7×1 m-auto min-w-[300px] ">{children}</main>
       </body>
     </html>
