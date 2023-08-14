@@ -8,7 +8,7 @@ export async function setProductQuantity(productId: string, quantity: number) {
   const cart = (await getCart()) ?? (await createCart());
 
   const productInCart = await cart.items.find(
-    (cart) => cart.productId === productId,
+    (cart) => cart.productId === productId
   );
 
   if (quantity === 0) {
@@ -25,7 +25,7 @@ export async function setProductQuantity(productId: string, quantity: number) {
   } else {
     await prisma.cartItem.create({
       data: {
-        cardId: cart.id,
+        cartId: cart.id,
         productId,
         quantity,
       },

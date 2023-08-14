@@ -1,6 +1,8 @@
-import { Prisma } from "@prisma/client";
+import { Cart, CartItem, Prisma } from "@prisma/client";
 import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "./prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export type CartWithProducts = Prisma.CartGetPayload<{
   include: { items: { include: { product: true } } };
@@ -16,13 +18,23 @@ export type ShoppingCart = CartWithProducts & {
 };
 
 export async function getCart(): Promise<ShoppingCart | null> {
-  const localCartId = cookies().get("localCartId")?.value;
-  const cart = localCartId
-    ? await prisma.cart.findUnique({
-        where: { id: localCartId },
-        include: { items: { include: { product: true } } },
-      })
-    : null;
+  const session = await getServerSession(authOptions);
+  let cart: CartWithProducts | null = null;
+
+  if (session) {
+    cart = await prisma.cart.findFirst({
+      where: { userId: session.user.id },
+      include: { items: { include: { product: true } } },
+    });
+  } else {
+    const localCartId = cookies().get("localCartId")?.value;
+    cart = localCartId
+      ? await prisma.cart.findUnique({
+          where: { id: localCartId },
+          include: { items: { include: { product: true } } },
+        })
+      : null;
+  }
 
   if (!cart) {
     return null;
@@ -34,18 +46,27 @@ export async function getCart(): Promise<ShoppingCart | null> {
     size: cart.items.reduce((acc, item) => acc + item.quantity, 0),
     subtotal: cart.items.reduce(
       (acc, item) => acc + item.quantity * item.product.price,
-      0,
+      0
     ),
   };
 }
 
 export async function createCart(): Promise<ShoppingCart> {
-  const newCart = await prisma.cart.create({
-    data: {},
-  });
+  const session = await getServerSession(authOptions);
+  let newCart: Cart;
 
-  // Note: Needs encryption + secure settings in real production app
-  cookies().set("localCartId", newCart.id);
+  if (session) {
+    newCart = await prisma.cart.create({
+      data: { userId: session.user.id },
+    });
+  } else {
+    newCart = await prisma.cart.create({
+      data: {},
+    });
+
+    // Note: Needs encryption + secure settings in real production app
+    cookies().set("localCartId", newCart.id);
+  }
 
   return {
     ...newCart,
@@ -53,4 +74,89 @@ export async function createCart(): Promise<ShoppingCart> {
     size: 0,
     subtotal: 0,
   };
+}
+
+export async function mergeAnonymousCartIntoUserCart(userId: string) {
+  const localCartId = cookies().get("localCartId")?.value;
+
+  const localCart = localCartId
+    ? await prisma.cart.findUnique({
+        where: { id: localCartId },
+        include: { items: true },
+      })
+    : null;
+
+  if (!localCart) return;
+
+  const userCart = await prisma.cart.findFirst({
+    where: { userId },
+    include: { items: true },
+  });
+
+  // transaction is a process when we can do a multiple action, if one of the action is failed, it will rolled back to its original data and none of the changes will be applied
+  // here we want to:
+  // 1. merge the user cart items with the anonymous cart items
+  // 2. replace the user cart items with the merged cart items
+  // 3. delete the anonymous cart items
+
+  await prisma.$transaction(async (tx) => {
+    if (userCart) {
+      const mergedCartItems = mergeCartItems(localCart?.items, userCart?.items);
+
+      await tx.cartItem.deleteMany({
+        where: { cartId: userCart.id },
+      });
+
+      await tx.cartItem.createMany({
+        data: mergedCartItems.map((item) => ({
+          cartId: userCart.id,
+          productId: item.productId,
+          quantity: item.quantity,
+        })),
+      });
+    } else {
+      await tx.cart.create({
+        data: {
+          userId,
+          items: {
+            createMany: {
+              data: localCart.items.map((item) => ({
+                productId: item.productId,
+                quantity: item.quantity,
+              })),
+            },
+          },
+        },
+      });
+    }
+
+    await tx.cart.delete({
+      where: { id: localCart.id },
+    });
+    cookies().set("localCartId", "");
+  });
+}
+
+function mergeCartItems(...cartItems: CartItem[][]): CartItem[] {
+  // complex reduce
+  return cartItems.reduce(
+    (acc, items) => {
+      // 1. call each element from current cart items
+      items.forEach((item) => {
+        // 2. collect acc items with the same product id into existingItem
+        const existingItem = acc.find((v) => v.productId === item.productId);
+
+        // 3. if existingItem true, sum up the quantity of existingItem and item
+        // if false then push to item
+        if (existingItem) {
+          existingItem.quantity += item.quantity;
+        } else {
+          acc.push(item);
+        }
+      });
+      return acc;
+    },
+    // return the array as array of CartItem
+    [] as CartItem[]
+  );
 }

@@ -18,18 +18,18 @@ const ShoppingCartButton = ({ cart }: ShoppingCartButtonProps) => {
 
   return (
     <>
-      <div className=" dropdown dropdown-end">
-        <label tabIndex={0} className="btn btn-square btn-ghost">
+      <div className=" dropdown-end dropdown">
+        <label tabIndex={0} className="btn-ghost btn-square btn">
           <div className=" indicator p-[0.2rem]">
-            <FaShoppingCart className=" text-xl shrink-0" />
-            <span className=" badge px-[0.3rem] py-2 text-xs indicator-item rounded-full bg-red-600 text-white">
+            <FaShoppingCart className=" shrink-0 text-xl" />
+            <span className=" badge indicator-item rounded-full bg-red-600 px-[0.3rem] py-2 text-xs text-white">
               {cart?.size || 0}
             </span>
           </div>
         </label>
         <div
           tabIndex={0}
-          className="card dropdown-content card-compact m-3 w-52 bg-base-100 shadow z-30"
+          className="card dropdown-content card-compact z-30 m-3 w-52 bg-base-100 shadow"
         >
           <div className=" card-body">
             <span className=" text-lg font-bold">{cart?.size || 0} Items</span>
@@ -39,7 +39,7 @@ const ShoppingCartButton = ({ cart }: ShoppingCartButtonProps) => {
             <div className=" card-actions">
               <Link
                 href={"/cart"}
-                className=" btn btn-primary btn-block"
+                className=" btn-primary btn-block btn"
                 onClick={closeDropDown}
               >
                 View Cart

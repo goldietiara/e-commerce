@@ -1,7 +1,9 @@
 import AddProductButton from "@/components/AddProductButton";
 import { prisma } from "@/lib/db/prisma";
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export const metadata = {
   title: "Add Product - Owy Shoppy",
@@ -25,10 +27,16 @@ const addProduct = async (formData: FormData) => {
   redirect("/");
 };
 
-const AddProductPage = () => {
+const AddProductPage = async () => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect("/api/auth/signin?callbackUrl=/add-product");
+  }
+
   return (
     <main className="flex flex-col gap-5">
-      <h1 className="mb-5 text-xl lg:text-center font-bold text-primary">
+      <h1 className="mb-5 text-xl font-bold text-primary lg:text-center">
         Add Product
       </h1>
       <form className="flex flex-col gap-5" action={addProduct}>
@@ -37,27 +45,27 @@ const AddProductPage = () => {
           name="name"
           type="text"
           placeholder="Product Name"
-          className="w-full  p-3 border-b-2 border-netural focus:border-primary bg-base-100 outline-none"
+          className="border-netural  w-full border-b-2 bg-base-100 p-3 outline-none focus:border-primary"
         />
         <textarea
           required
           name="description"
           placeholder="Description"
-          className="w-full  p-3 border-b-2 border-netural focus:border-primary bg-base-100 outline-none"
+          className="border-netural  w-full border-b-2 bg-base-100 p-3 outline-none focus:border-primary"
         />
         <input
           required
           name="imageUrl"
           type="url"
           placeholder="Image Url"
-          className="w-full  p-3 border-b-2 border-netural focus:border-primary bg-base-100 outline-none"
+          className="border-netural  w-full border-b-2 bg-base-100 p-3 outline-none focus:border-primary"
         />
         <input
           required
           name="price"
           type="number"
           placeholder="Price"
-          className="w-full  p-3 border-b-2 border-netural focus:border-primary bg-base-100 outline-none"
+          className="border-netural  w-full border-b-2 bg-base-100 p-3 outline-none focus:border-primary"
         />
         <AddProductButton className=" btn-block">Add Product</AddProductButton>
       </form>
