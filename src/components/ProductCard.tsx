@@ -15,7 +15,7 @@ const ProductCard = ({ product }: Props) => {
   return (
     <Link
       href={`/products/${product.id}`}
-      className=" card w-full  bg-base-100 hover:shadow-xl transition"
+      className=" card w-full  bg-base-100 transition hover:shadow-xl"
     >
       <figure>
         <Image
@@ -37,3 +37,4 @@ const ProductCard = ({ product }: Props) => {
 };
 
 export default ProductCard;
+//test
