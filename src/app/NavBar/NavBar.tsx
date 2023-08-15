@@ -69,6 +69,7 @@ const NavBar = async () => {
               </form>
             </ul>
           </div>
+
           <ShoppingCartButton cart={cart} />
           <UserMenuButton session={session} />
         </div>

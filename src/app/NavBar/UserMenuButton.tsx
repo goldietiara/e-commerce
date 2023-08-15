@@ -3,6 +3,7 @@ import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import { FiMenu } from "react-icons/fi";
 import Image from "next/image";
+import Link from "next/link";
 
 interface UserMenuButtonProps {
   session: Session | null;
@@ -31,12 +32,24 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
       >
         <li>
           {user ? (
-            <button
-              className=" min-w-[100px] bg-base-200 py-2 font-bold hover:bg-base-300"
-              onClick={() => signOut({ callbackUrl: "/" })}
-            >
-              Sign Out
-            </button>
+            <>
+              <button
+                className=" min-w-[100px] bg-base-200 py-2 font-bold hover:bg-base-300"
+                onClick={() => signOut({ callbackUrl: "/" })}
+              >
+                Sign Out
+              </button>
+              {session?.user?.id === "64d7952c8848940d99582eb7" ? (
+                <Link
+                  href={"add-product"}
+                  className=" min-w-[100px] bg-base-200 py-2 font-bold hover:bg-base-300"
+                >
+                  Add Product
+                </Link>
+              ) : (
+                ""
+              )}
+            </>
           ) : (
             <button
               className=" min-w-[100px] bg-base-200 py-2 font-bold hover:bg-base-300"

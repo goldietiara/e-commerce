@@ -42,8 +42,8 @@ const AddProductPage = async () => {
   }
 
   return (
-    <main className="flex flex-col gap-5">
-      <h1 className="mb-5 text-xl font-bold text-primary lg:text-center">
+    <main className="flex flex-col gap-5 lg:mx-20">
+      <h1 className="mb-5 text-xl font-bold text-primary md:text-center md:text-4xl">
         Add Product
       </h1>
       <form className="flex flex-col gap-5" action={addProduct}>
@@ -52,29 +52,31 @@ const AddProductPage = async () => {
           name="name"
           type="text"
           placeholder="Product Name"
-          className="border-netural  w-full border-b-2 bg-base-100 p-3 outline-none focus:border-primary"
+          className="w-full  border-b-2 border-base-200 bg-base-100 p-3 outline-none focus:border-primary"
         />
         <textarea
           required
           name="description"
           placeholder="Description"
-          className="border-netural  w-full border-b-2 bg-base-100 p-3 outline-none focus:border-primary"
+          className="w-full  border-b-2 border-base-200 bg-base-100 p-3 outline-none focus:border-primary"
         />
         <input
           required
           name="imageUrl"
           type="url"
           placeholder="Image Url"
-          className="border-netural  w-full border-b-2 bg-base-100 p-3 outline-none focus:border-primary"
+          className=" w-full  border-b-2 border-base-200 bg-base-100 p-3 outline-none focus:border-primary"
         />
         <input
           required
           name="price"
           type="number"
           placeholder="Price"
-          className="border-netural  w-full border-b-2 bg-base-100 p-3 outline-none focus:border-primary"
+          className="w-full  border-b-2 border-base-200 bg-base-100 p-3 outline-none focus:border-primary"
         />
-        <AddProductButton className=" btn-block">Add Product</AddProductButton>
+        <AddProductButton className=" btn-block my-10">
+          Add Product
+        </AddProductButton>
       </form>
     </main>
   );
