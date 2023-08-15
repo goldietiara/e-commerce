@@ -7,6 +7,7 @@ import React, { cache } from "react";
 import AddToCartButton from "./AddToCartButton";
 import { incrementProductQuantity } from "./actions";
 import { formatPrice } from "@/lib/format";
+import ViewMore from "@/components/viewMore";
 
 interface params {
   params: {
@@ -37,7 +38,7 @@ const ProductPage = async ({ params: { id } }: params) => {
   const product = await getProduct(id);
 
   return (
-    <div className=" lg:mx-20">
+    <div className=" flex flex-col gap-10 lg:mx-20">
       <div className=" grid h-full w-full grid-cols-1 gap-10 overflow-hidden md:h-[400px] md:grid-cols-2">
         <div className="h-full w-full overflow-clip md:col-start-1 md:col-end-2">
           <Image
@@ -65,28 +66,14 @@ const ProductPage = async ({ params: { id } }: params) => {
           </div>
         </div>
       </div>
+      <div className=" flex flex-col gap-3">
+        <h1 className=" text-base md:text-3xl">You Might Also Like</h1>
+        <ViewMore
+          productName={`${product.name.substring(0, 4)}`}
+          productId={`${product.id}`}
+        />
+      </div>
     </div>
-    // <div className=" mx-20 flex flex-col gap-4 lg:flex-row lg:justify-center">
-    //   <div className=" relative h-[150px] w-[50%] grid-cols-1 overflow-hidden rounded-xl bg-pink-200 shadow-xl md:h-[350px]">
-    //     <Image
-    //       src={product.imageUrl}
-    //       alt={product.name}
-    //       width={500}
-    //       height={500}
-    //       className=" col-span-1 h-full w-full"
-    //       priority
-    //     />
-    //   </div>
-    //   <div>
-    //     <h1 className=" text-5xl font-bold">{product.name}</h1>
-    //     <PriceTag price={product.price} className="mt-4" />
-    //     <p className="py-6 ">{product.description}</p>
-    //     <AddToCartButton
-    //       productId={product.id}
-    //       incrementProductQuantity={incrementProductQuantity}
-    //     />
-    //   </div>
-    // </div>
   );
 };
 
