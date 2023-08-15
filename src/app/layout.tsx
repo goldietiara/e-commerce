@@ -20,10 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={` relative ${inter.className}`}>
         <SessionProvider>
-          <div className="sticky top-0 z-50">
+          <div className="sticky top-0 z-40">
             <NavBar />
           </div>
-          <main className="p-4 max-w-7×1 m-auto min-w-[300px] ">
+          <main className="max-w-7×1 m-auto min-w-[300px] p-4 ">
             {children}
           </main>
         </SessionProvider>

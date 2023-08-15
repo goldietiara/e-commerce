@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 interface PaginationBarProps {
   currentPage: number;
@@ -35,7 +34,7 @@ export default function PaginationBar({
       <div className="join block sm:hidden">
         {currentPage > 1 && (
           <Link href={`?page=${currentPage - 1}`} className="join-item btn">
-            <GrFormPrevious />
+            «
           </Link>
         )}
         <button className="join-item btn pointer-events-none">
@@ -43,7 +42,7 @@ export default function PaginationBar({
         </button>
         {currentPage < totalPages && (
           <Link href={`?page=${currentPage + 1}`} className="join-item btn">
-            <GrFormNext />
+            »
           </Link>
         )}
       </div>
