@@ -12,9 +12,9 @@ function AddToCartButton({ productId, incrementProductQuantity }: props) {
   const [success, setSuccess] = useState(false);
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex w-full items-center gap-2">
       <button
-        className=" btn-primary btn"
+        className=" btn-primary btn w-full"
         onClick={() => {
           setSuccess(false);
           startTransition(async () => {

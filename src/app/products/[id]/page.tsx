@@ -36,25 +36,54 @@ const ProductPage = async ({ params: { id } }: params) => {
   const product = await getProduct(id);
 
   return (
-    <div className=" flex flex-col lg:flex-row gap-4 lg:justify-center">
-      <Image
-        src={product.imageUrl}
-        alt={product.name}
-        width={500}
-        height={500}
-        className="rounded-lg"
-        priority
-      />
-      <div>
-        <h1 className=" text-5xl font-bold">{product.name}</h1>
-        <PriceTag price={product.price} className="mt-4" />
-        <p className="py-6 ">{product.description}</p>
-        <AddToCartButton
-          productId={product.id}
-          incrementProductQuantity={incrementProductQuantity}
-        />
+    <div className=" lg:mx-20">
+      <div className=" grid h-full w-full grid-cols-1 gap-10 overflow-hidden md:h-[400px] md:grid-cols-2">
+        <div className="h-full w-full overflow-clip md:col-start-1 md:col-end-2">
+          <Image
+            src={product.imageUrl}
+            alt={product.name}
+            width={1000}
+            height={1000}
+            className="h-[400px] w-full object-none "
+            priority
+          />
+        </div>
+        <div className=" flex flex-col justify-between md:col-start-2 md:col-end-3">
+          <div>
+            <h1 className=" text-5xl font-bold">{product.name}</h1>
+            <p className="py-6 ">{product.description}</p>
+          </div>
+          <div className="flex flex-col gap-5">
+            <PriceTag price={product.price} />
+            <AddToCartButton
+              productId={product.id}
+              incrementProductQuantity={incrementProductQuantity}
+            />
+          </div>
+        </div>
       </div>
     </div>
+    // <div className=" mx-20 flex flex-col gap-4 lg:flex-row lg:justify-center">
+    //   <div className=" relative h-[150px] w-[50%] grid-cols-1 overflow-hidden rounded-xl bg-pink-200 shadow-xl md:h-[350px]">
+    //     <Image
+    //       src={product.imageUrl}
+    //       alt={product.name}
+    //       width={500}
+    //       height={500}
+    //       className=" col-span-1 h-full w-full"
+    //       priority
+    //     />
+    //   </div>
+    //   <div>
+    //     <h1 className=" text-5xl font-bold">{product.name}</h1>
+    //     <PriceTag price={product.price} className="mt-4" />
+    //     <p className="py-6 ">{product.description}</p>
+    //     <AddToCartButton
+    //       productId={product.id}
+    //       incrementProductQuantity={incrementProductQuantity}
+    //     />
+    //   </div>
+    // </div>
   );
 };
 
