@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import React, { cache } from "react";
 import AddToCartButton from "./AddToCartButton";
 import { incrementProductQuantity } from "./actions";
+import { formatPrice } from "@/lib/format";
 
 interface params {
   params: {
@@ -54,7 +55,9 @@ const ProductPage = async ({ params: { id } }: params) => {
             <p className="py-6 ">{product.description}</p>
           </div>
           <div className="flex flex-col gap-5">
-            <PriceTag price={product.price} />
+            <p className="text-xl font-bold sm:text-3xl">
+              {formatPrice(product.price)}
+            </p>
             <AddToCartButton
               productId={product.id}
               incrementProductQuantity={incrementProductQuantity}

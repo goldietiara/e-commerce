@@ -6,11 +6,7 @@ interface props {
   className?: string;
 }
 const PriceTag = ({ price, className }: props) => {
-  return (
-    <span className={` text-lg font-semibold md:text-2xl ${className}`}>
-      {formatPrice(price)}
-    </span>
-  );
+  return <span className={` badge ${className}`}>{formatPrice(price)}</span>;
 };
 
 export default PriceTag;
