@@ -7,7 +7,7 @@ import React, { cache } from "react";
 import AddToCartButton from "./AddToCartButton";
 import { incrementProductQuantity } from "./actions";
 import { formatPrice } from "@/lib/format";
-import ViewMore from "@/components/viewMore";
+import ViewMore from "@/components/ViewMore";
 
 interface params {
   params: {
@@ -66,8 +66,8 @@ const ProductPage = async ({ params: { id } }: params) => {
           </div>
         </div>
       </div>
-      <div className=" flex flex-col gap-3">
-        <h1 className=" text-base md:text-3xl">You Might Also Like</h1>
+      <div className=" mt-5 flex flex-col gap-3">
+        <h1 className=" text-xl md:text-3xl">You Might Also Like</h1>
         <ViewMore
           productName={`${product.name.substring(0, 4)}`}
           productId={`${product.id}`}
