@@ -22,30 +22,33 @@ export async function setProductQuantity(productId: string, quantity: number) {
         },
       });
     }
-  } else if (productInCart) {
-    await prisma.cart.update({
-      where: { id: cart.id },
-      data: {
-        items: {
-          update: {
-            where: { id: productInCart.id },
-            data: { quantity },
-          },
-        },
-      },
-    });
   } else {
-    await prisma.cart.update({
-      where: { id: cart.id },
-      data: {
-        items: {
-          create: {
-            productId,
-            quantity,
+    if (productInCart) {
+      await prisma.cart.update({
+        where: { id: cart.id },
+        data: {
+          items: {
+            update: {
+              where: { id: productInCart.id },
+              data: { quantity },
+            },
           },
         },
-      },
-    });
+      });
+    } else {
+      await prisma.cart.update({
+        where: { id: cart.id },
+        data: {
+          items: {
+            create: {
+              productId,
+              quantity,
+            },
+          },
+        },
+      });
+    }
   }
+
   revalidatePath("/cart");
 }
