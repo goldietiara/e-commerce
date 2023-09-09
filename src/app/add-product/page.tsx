@@ -39,6 +39,7 @@ const AddProductPage = async () => {
 
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/add-product");
+
   }
 
   return (
