@@ -1,27 +1,39 @@
+import { SiGmail } from "react-icons/si";
+import { TfiLinkedin } from "react-icons/tfi";
+import { TbBrandGithubFilled } from "react-icons/tb";
+
 export default function Footer() {
   return (
     <footer className=" mt-10 bg-neutral p-10 text-neutral-content">
       <div className="footer m-auto max-w-7xl">
         <div>
-          <span className="footer-title">Services</span>
-          <a className="link-hover link">Branding</a>
-          <a className="link-hover link">Design</a>
-          <a className="link-hover link">Marketing</a>
-          <a className="link-hover link">Advertisement</a>
+          <div className=" flex gap-5">
+            <a
+              className="link-hover link shrink-0 bg-white p-1 text-lg text-neutral"
+              href={`mailto:goldietiara.acc@gmail.com`}
+            >
+              <SiGmail />
+            </a>
+            <a
+              className="link-hover link shrink-0 bg-white p-1 text-lg text-neutral"
+              href={`https://www.linkedin.com/in/goldie-tiara-putri-900733196`}
+              target="_blank"
+            >
+              <TfiLinkedin />
+            </a>
+            <a
+              className="link-hover link shrink-0 bg-white p-1 text-lg text-neutral"
+              href={`https://github.com/goldietiara`}
+              target="_blank"
+            >
+              <TbBrandGithubFilled />
+            </a>
+          </div>
         </div>
-        <div>
-          <span className="footer-title">Company</span>
-          <a className="link-hover link">About us</a>
-          <a className="link-hover link">Contact</a>
-          <a className="link-hover link">Jobs</a>
-          <a className="link-hover link">Press kit</a>
-        </div>
-        <div>
-          <span className="footer-title">Legal</span>
-          <a className="link-hover link">Terms of use</a>
-          <a className="link-hover link">Privacy policy</a>
-          <a className="link-hover link">Cookie policy</a>
-        </div>
+
+        <a className="link-hover link">
+          © 2023 Goldie Tiara. All rights reserved.
+        </a>
       </div>
     </footer>
   );
