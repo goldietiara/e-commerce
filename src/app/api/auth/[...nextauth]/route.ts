@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    // passing the user.id to session.user.id
+    // passing the user.id to session
     session({ session, user }) {
       session.user.id = user.id;
       return session;

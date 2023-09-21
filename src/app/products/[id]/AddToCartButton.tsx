@@ -20,15 +20,22 @@ function AddToCartButton({ productId, incrementProductQuantity }: props) {
           startTransition(async () => {
             await incrementProductQuantity(productId);
             setSuccess(true);
+            setTimeout(() => {
+              setSuccess(false);
+            }, 3000);
           });
         }}
       >
-        Add to Cart <FaShoppingCart />
+        {!isPending && !success && (
+          <span className="flex gap-1">
+            Add to Cart <FaShoppingCart />
+          </span>
+        )}
+        {isPending && <span className="loading loading-spinner loading-md" />}
+        {!isPending && success && (
+          <span className=" text-success">Added to Cart</span>
+        )}
       </button>
-      {isPending && <span className="loading loading-spinner loading-md" />}
-      {!isPending && success && (
-        <span className=" text-success">Added to Cart</span>
-      )}
     </div>
   );
 }

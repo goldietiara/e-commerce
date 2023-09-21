@@ -41,7 +41,7 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
               </button>
               {session?.user?.id === "64d7952c8848940d99582eb7" ? (
                 <Link
-                  href={"add-product"}
+                  href={"/add-product"}
                   className=" min-w-[100px] bg-base-200 py-2 font-bold hover:bg-base-300"
                 >
                   Add Product
